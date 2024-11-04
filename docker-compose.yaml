@@ -5,7 +5,7 @@ services:
     ports:
       - "27017:27017"
     env_file:
-      - ../.env
+      - .env
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
@@ -21,22 +21,22 @@ services:
 
   backend:
     build:
-      context: ../backend
+      context: ./backend
       dockerfile: Dockerfile
     container_name: backend
     depends_on:
       - mongodb
       - redis
     env_file:
-      - ../.env
+      - .env
     ports:
       - "8000:8000"
     volumes:
-      - ../backend:/app
+      - ./backend:/app
 
   celery_worker:
     build:
-      context: ../backend
+      context: ./backend
       dockerfile: Dockerfile
     container_name: celery_worker
     command: celery -A celery_config.celery_app worker --loglevel=info
@@ -44,13 +44,13 @@ services:
       - redis
       - backend
     env_file:
-      - ../.env
+      - .env
     volumes:
-      - ../backend:/app
+      - ./backend:/app
 
   celery_beat:
     build:
-      context: ../backend
+      context: ./backend
       dockerfile: Dockerfile
     container_name: celery_beat
     # For start run
@@ -64,9 +64,9 @@ services:
       - celery_worker
       - backend
     env_file:
-      - ../.env
+      - .env
     volumes:
-      - ../backend:/app
+      - ./backend:/app
 
 volumes:
   mongodb_data:

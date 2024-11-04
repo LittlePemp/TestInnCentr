@@ -78,7 +78,7 @@ REDIS_PORT=6379
 ```
 2. Запустить Docker-compose:
 ```bash
-docker-compose -f ./infra/docker-compose.yaml up -d
+docker-compose up -d
 ```
 
 3. Перейти на http://127.0.0.1:8000/docs и протестировать.
